@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     // On clicking a reminder item
+    //미리 정해져있던 어플 내의 id에 따라 리마인더 정보를 불러온다.
     private void selectReminder(int mClickID) {
         String mStringClickID = Integer.toString(mClickID);
 
@@ -322,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Class to compare date and time so that items are sorted in ascending order
         public class DateTimeComparator implements Comparator {
-            DateFormat f = new SimpleDateFormat("dd/mm/yyyy hh:mm");
+            DateFormat f = new SimpleDateFormat("mm/dd/yyyy hh:mm");
 
             public int compare(Object a, Object b) {
                 String o1 = ((DateTimeSorter)a).getDateTime();

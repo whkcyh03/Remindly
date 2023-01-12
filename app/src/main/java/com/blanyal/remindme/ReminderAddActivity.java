@@ -84,6 +84,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_add_reminder);
 
         // Initialize Views
+        //추후 중요도 표시 기능 추가
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTitleText = (EditText) findViewById(R.id.reminder_title);
         mDateText = (TextView) findViewById(R.id.set_date);
@@ -113,7 +114,8 @@ public class ReminderAddActivity extends AppCompatActivity implements
         mMonth = mCalendar.get(Calendar.MONTH) + 1;
         mDay = mCalendar.get(Calendar.DATE);
 
-        mDate = mDay + "/" + mMonth + "/" + mYear;
+        //mDate = mDay + "/" + mMonth + "/" + mYear;
+        mDate = mMonth + "/" + mDay + "/" + mYear;
         mTime = mHour + ":" + mMinute;
 
         // Setup Reminder Title EditText
@@ -238,7 +240,8 @@ public class ReminderAddActivity extends AppCompatActivity implements
         mDay = dayOfMonth;
         mMonth = monthOfYear;
         mYear = year;
-        mDate = dayOfMonth + "/" + monthOfYear + "/" + year;
+        //mDate = dayOfMonth + "/" + monthOfYear + "/" + year;
+        mDate = monthOfYear + "/" + dayOfMonth + "/" + year;
         mDateText.setText(mDate);
     }
 

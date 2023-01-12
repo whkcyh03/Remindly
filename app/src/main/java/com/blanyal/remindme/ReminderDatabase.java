@@ -26,6 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+//SQLiteOpenHelper는 응용프로그램에 넣어서 사용하는 가벼운 데이터베이스
 
 public class ReminderDatabase extends SQLiteOpenHelper {
     // Database Version

@@ -17,6 +17,8 @@
 
 package com.blanyal.remindme;
 
+//MainActivity에서 사용하는 DateTimeSorter 클래스 정의
+
 // Class to create DateTime objects for easy sorting
 public class DateTimeSorter {
     public int mIndex;
