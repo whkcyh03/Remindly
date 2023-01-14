@@ -18,6 +18,8 @@
 package com.blanyal.remindme;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,19 +30,21 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
 
 import java.util.Calendar;
 
-
+//1/13 디지털 방식으로 시간을 선택하는 방식을 사용하려면 timepickerdialog의 설정을 spinner로 변경하면 된다.
+//하지만, 해당 프로그램에서의 timepickerdialog는 android의 라이브러리가 아닌 오픈소스로 받아온 같은 이름의 다른 기능을 가진 timepicker를 사용했다.
+//오픈소스 timepickerdialog를 이해하거나 해당 프로그램의 timepicker를 전부 안드로이드 기본으로 변경 필요
 public class ReminderAddActivity extends AppCompatActivity implements
         TimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateSetListener{
@@ -60,6 +64,31 @@ public class ReminderAddActivity extends AppCompatActivity implements
     private String mRepeatNo;
     private String mRepeatType;
     private String mActive;
+    private TimePickerDialog.OnTimeSetListener mtlistener = new TimePickerDialog.OnTimeSetListener(){
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            mHour = hourOfDay;
+            mMinute = minute;
+            if (minute < 10) {
+                mTime = hourOfDay + ":" + "0" + minute;
+            } else {
+                mTime = hourOfDay + ":" + minute;
+            }
+            mTimeText.setText(mTime);
+        }
+    };
+    private DatePickerDialog.OnDateSetListener mdlistener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            monthOfYear ++;
+            mDay = dayOfMonth;
+            mMonth = monthOfYear;
+            mYear = year;
+            //mDate = dayOfMonth + "/" + monthOfYear + "/" + year;
+            mDate = monthOfYear + "/" + dayOfMonth + "/" + year;
+            mDateText.setText(mDate);
+        }
+    };
 
     // Values for orientation change
     private static final String KEY_TITLE = "title_key";
@@ -94,7 +123,6 @@ public class ReminderAddActivity extends AppCompatActivity implements
         mRepeatTypeText = (TextView) findViewById(R.id.set_repeat_type);
         mFAB1 = (FloatingActionButton) findViewById(R.id.starred1);
         mFAB2 = (FloatingActionButton) findViewById(R.id.starred2);
-
         // Setup Toolbar
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.title_activity_add_reminder);
@@ -195,34 +223,39 @@ public class ReminderAddActivity extends AppCompatActivity implements
         outState.putCharSequence(KEY_ACTIVE, mActive);
     }
 
+
     // On clicking Time picker
     public void setTime(View v){
         Calendar now = Calendar.getInstance();
-        TimePickerDialog tpd = TimePickerDialog.newInstance(
+        TimePickerDialog tpd = new TimePickerDialog(
                 this,
+                android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                mtlistener,
                 now.get(Calendar.HOUR_OF_DAY),
                 now.get(Calendar.MINUTE),
                 false
         );
-        tpd.setThemeDark(false);
-        tpd.show(getFragmentManager(), "Timepickerdialog");
+        tpd.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        tpd.show();
     }
+
 
     // On clicking Date picker
     public void setDate(View v){
         Calendar now = Calendar.getInstance();
-        DatePickerDialog dpd = DatePickerDialog.newInstance(
+        DatePickerDialog dpd = new DatePickerDialog(
                 this,
+                mdlistener,
                 now.get(Calendar.YEAR),
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
         );
-        dpd.show(getFragmentManager(), "Datepickerdialog");
+        dpd.show();
     }
 
-    // Obtain time from time picker
+
     @Override
-    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         mHour = hourOfDay;
         mMinute = minute;
         if (minute < 10) {
@@ -233,9 +266,8 @@ public class ReminderAddActivity extends AppCompatActivity implements
         mTimeText.setText(mTime);
     }
 
-    // Obtain date from date picker
     @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         monthOfYear ++;
         mDay = dayOfMonth;
         mMonth = monthOfYear;
@@ -244,6 +276,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         mDate = monthOfYear + "/" + dayOfMonth + "/" + year;
         mDateText.setText(mDate);
     }
+
 
     // On clicking the active button
     public void selectFab1(View v) {
