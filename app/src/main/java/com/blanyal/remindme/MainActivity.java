@@ -51,7 +51,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView mList;
+    private RecyclerView mList; //리마인더 목록
     private SimpleAdapter mAdapter;
     private Toolbar mToolbar;
     private TextView mNoReminderView;
@@ -203,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.setItemCount(getDefaultItemCount());
     }
 
+    //onCreate()와 같은 생명주기 함수
     // Recreate recycler view
     // This is done so that newly created reminders are displayed
     @Override
@@ -321,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        //DateTimeSorter 클래스를 사용해 날짜순으로 정렬
         // Class to compare date and time so that items are sorted in ascending order
         public class DateTimeComparator implements Comparator {
             DateFormat f = new SimpleDateFormat("mm/dd/yyyy hh:mm");

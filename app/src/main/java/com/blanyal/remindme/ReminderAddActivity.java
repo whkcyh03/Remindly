@@ -64,7 +64,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
     private String mRepeatNo;
     private String mRepeatType;
     private String mActive;
-    private TimePickerDialog.OnTimeSetListener mtlistener = new TimePickerDialog.OnTimeSetListener(){
+    private TimePickerDialog.OnTimeSetListener mtlistener = new TimePickerDialog.OnTimeSetListener(){ // 타임피커 리스너
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             mHour = hourOfDay;
@@ -77,14 +77,13 @@ public class ReminderAddActivity extends AppCompatActivity implements
             mTimeText.setText(mTime);
         }
     };
-    private DatePickerDialog.OnDateSetListener mdlistener = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener mdlistener = new DatePickerDialog.OnDateSetListener() { //데이트피커 리스너
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             monthOfYear ++;
             mDay = dayOfMonth;
             mMonth = monthOfYear;
             mYear = year;
-            //mDate = dayOfMonth + "/" + monthOfYear + "/" + year;
             mDate = monthOfYear + "/" + dayOfMonth + "/" + year;
             mDateText.setText(mDate);
         }
@@ -279,6 +278,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
     }
 
 
+    //알림 여부 설정 버튼
     // On clicking the active button
     public void selectFab1(View v) {
         mFAB1 = (FloatingActionButton) findViewById(R.id.starred1);
@@ -297,6 +297,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         mActive = "false";
     }
 
+    //반복 여부 스위치 버튼
     // On clicking the repeat switch
     public void onSwitchRepeat(View view) {
         boolean on = ((Switch) view).isChecked();
@@ -309,6 +310,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         }
     }
 
+    //반복 종류 설정 버튼
     // On clicking repeat type button
     public void selectRepeatType(View v){
         final String[] items = new String[5];
@@ -335,6 +337,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         alert.show();
     }
 
+    //반복 간격 설정 버튼
     // On clicking repeat interval button
     public void setRepeatNo(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -368,6 +371,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         alert.show();
     }
 
+    //리마인더 저장 버튼
     // On clicking the save button
     public void saveReminder(){
         ReminderDatabase rb = new ReminderDatabase(this);
@@ -412,12 +416,14 @@ public class ReminderAddActivity extends AppCompatActivity implements
         onBackPressed();
     }
 
+    //뒤로가기 버튼
     // On pressing the back button
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
+    //메뉴 구축
     // Creating the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

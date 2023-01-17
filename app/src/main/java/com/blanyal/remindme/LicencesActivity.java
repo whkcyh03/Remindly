@@ -24,7 +24,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 
-public class LicencesActivity extends AppCompatActivity {
+public class  LicencesActivity extends AppCompatActivity {
     private Toolbar mToolbar;
 
     @Override
