@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Create context menu for long press actions
+    //메뉴 화면 구성
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getMenuInflater().inflate(R.menu.menu_add_reminder, menu);
@@ -198,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i, 1);
     }
 
+    //서브 액티비티에서 메인 액티비티로 전환될 때 사용
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mAdapter.setItemCount(getDefaultItemCount());

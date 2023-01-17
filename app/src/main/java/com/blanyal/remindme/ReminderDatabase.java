@@ -99,6 +99,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
         return (int) ID;
     }
 
+    //리마인더에 할당된 id로 단일 리마인더를 조회
     // Getting single Reminder
     public Reminder getReminder(int id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -127,6 +128,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
         return reminder;
     }
 
+    //모든 리마인더를 조회
     // Getting all Reminders
     public List<Reminder> getAllReminders(){
         List<Reminder> reminderList = new ArrayList<>();
@@ -157,6 +159,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
         return reminderList;
     }
 
+    //리마인더 개수를 조회
     // Getting Reminders Count
     public int getRemindersCount(){
         String countQuery = "SELECT * FROM " + TABLE_REMINDERS;

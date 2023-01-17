@@ -102,6 +102,7 @@ public class BootReceiver extends BroadcastReceiver {
                     mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
                 }
 
+                //반복 여부에 따라 다른 종류의 알람으로 설정
                 // Create a new notification
                 if (mActive.equals("true")) {
                     if (mRepeat.equals("true")) {
