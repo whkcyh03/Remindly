@@ -113,7 +113,6 @@ public class ReminderAddActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_add_reminder);
 
         // Initialize Views
-        //추후 중요도 표시 기능 추가
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTitleText = (EditText) findViewById(R.id.reminder_title);
         mDateText = (TextView) findViewById(R.id.set_date);
@@ -224,6 +223,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
     }
 
 
+    //Timepicker 초기화
     // On clicking Time picker
     public void setTime(View v){
         Calendar now = Calendar.getInstance();
@@ -239,7 +239,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         tpd.show();
     }
 
-
+    //Datepicker 초기화
     // On clicking Date picker
     public void setDate(View v){
         Calendar now = Calendar.getInstance();
@@ -254,6 +254,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
     }
 
 
+    //시간과 날짜 받아오는 함수
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         mHour = hourOfDay;
@@ -424,6 +425,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         return true;
     }
 
+    //오른쪽 상단에 표기되는 메뉴를 만드는 함수로 위의 저장과 뒤로가기가 포함된다.
     // On clicking menu buttons
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

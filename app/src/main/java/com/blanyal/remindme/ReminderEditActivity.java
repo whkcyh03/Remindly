@@ -18,6 +18,8 @@
 package com.blanyal.remindme;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,15 +31,15 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
 
@@ -68,6 +70,31 @@ public class ReminderEditActivity extends AppCompatActivity implements
     private Reminder mReceivedReminder;
     private ReminderDatabase rb;
     private AlarmReceiver mAlarmReceiver;
+    private android.app.TimePickerDialog.OnTimeSetListener mtlistener = new android.app.TimePickerDialog.OnTimeSetListener(){
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            mHour = hourOfDay;
+            mMinute = minute;
+            if (minute < 10) {
+                mTime = hourOfDay + ":" + "0" + minute;
+            } else {
+                mTime = hourOfDay + ":" + minute;
+            }
+            mTimeText.setText(mTime);
+        }
+    };
+    private android.app.DatePickerDialog.OnDateSetListener mdlistener = new android.app.DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            monthOfYear ++;
+            mDay = dayOfMonth;
+            mMonth = monthOfYear;
+            mYear = year;
+            //mDate = dayOfMonth + "/" + monthOfYear + "/" + year;
+            mDate = monthOfYear + "/" + dayOfMonth + "/" + year;
+            mDateText.setText(mDate);
+        }
+    };
 
     // Constant Intent String
     public static final String EXTRA_REMINDER_ID = "Reminder_ID";
@@ -234,31 +261,35 @@ public class ReminderEditActivity extends AppCompatActivity implements
     // On clicking Time picker
     public void setTime(View v){
         Calendar now = Calendar.getInstance();
-        TimePickerDialog tpd = TimePickerDialog.newInstance(
+        android.app.TimePickerDialog tpd = new android.app.TimePickerDialog(
                 this,
+                android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                mtlistener,
                 now.get(Calendar.HOUR_OF_DAY),
                 now.get(Calendar.MINUTE),
                 false
         );
-        tpd.setThemeDark(false);
-        tpd.show(getFragmentManager(), "Timepickerdialog");
+        tpd.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        tpd.show();
     }
+
 
     // On clicking Date picker
     public void setDate(View v){
         Calendar now = Calendar.getInstance();
-        DatePickerDialog dpd = DatePickerDialog.newInstance(
+        android.app.DatePickerDialog dpd = new android.app.DatePickerDialog(
                 this,
+                mdlistener,
                 now.get(Calendar.YEAR),
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
         );
-        dpd.show(getFragmentManager(), "Datepickerdialog");
+        dpd.show();
     }
 
-    // Obtain time from time picker
+
     @Override
-    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         mHour = hourOfDay;
         mMinute = minute;
         if (minute < 10) {
@@ -269,14 +300,14 @@ public class ReminderEditActivity extends AppCompatActivity implements
         mTimeText.setText(mTime);
     }
 
-    // Obtain date from date picker
     @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         monthOfYear ++;
         mDay = dayOfMonth;
         mMonth = monthOfYear;
         mYear = year;
-        mDate = dayOfMonth + "/" + monthOfYear + "/" + year;
+        //mDate = dayOfMonth + "/" + monthOfYear + "/" + year;
+        mDate = monthOfYear + "/" + dayOfMonth + "/" + year;
         mDateText.setText(mDate);
     }
 

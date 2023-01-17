@@ -24,7 +24,7 @@ import android.content.Intent;
 import java.util.Calendar;
 import java.util.List;
 
-
+//BroadcastReceiver는 전화, 문자 등의 알림을 받고 방송을 해주는 기능으로 Intent를 통해 발송하고 발송된 방송은 BroadcastReceiver를 통해 수신
 public class BootReceiver extends BroadcastReceiver {
 
     private String mTitle;
@@ -50,6 +50,7 @@ public class BootReceiver extends BroadcastReceiver {
     private static final long milMonth = 2592000000L;
 
 
+    //부팅이 완료된 후 실행하고 리마인더데이터베이스에서 리마인더 리스트를 받아온다.
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
