@@ -33,6 +33,7 @@ public class BootReceiver extends BroadcastReceiver {
     private String mRepeatNo;
     private String mRepeatType;
     private String mActive;
+    private String mGentle;
     private String mRepeat;
     private String[] mDateSplit;
     private String[] mTimeSplit;
@@ -67,6 +68,7 @@ public class BootReceiver extends BroadcastReceiver {
                 mRepeatNo = rm.getRepeatNo();
                 mRepeatType = rm.getRepeatType();
                 mActive = rm.getActive();
+                mGentle = rm.getGentle();
                 mDate = rm.getDate();
                 mTime = rm.getTime();
 

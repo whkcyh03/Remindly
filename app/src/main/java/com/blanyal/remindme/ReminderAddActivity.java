@@ -64,6 +64,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
     private String mRepeatNo;
     private String mRepeatType;
     private String mActive;
+    private String mGentle;
     private TimePickerDialog.OnTimeSetListener mtlistener = new TimePickerDialog.OnTimeSetListener(){ // 타임피커 리스너
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -97,6 +98,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
     private static final String KEY_REPEAT_NO = "repeat_no_key";
     private static final String KEY_REPEAT_TYPE = "repeat_type_key";
     private static final String KEY_ACTIVE = "active_key";
+    private static final String KEY_GENTLE = "gentle_key";
 
     // Constant values in milliseconds
     private static final long milMinute = 60000L;
@@ -132,6 +134,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         mRepeat = "true";
         mRepeatNo = Integer.toString(1);
         mRepeatType = "Hour";
+        mGentle = "false"; // 리마인더의 중요 여부를 중요하지 않음으로 설정
 
         mCalendar = Calendar.getInstance();
         mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
@@ -194,6 +197,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
             mRepeatType = savedRepeatType;
 
             mActive = savedInstanceState.getString(KEY_ACTIVE);
+            mGentle = savedInstanceState.getString(KEY_GENTLE);
         }
 
         // Setup up active buttons
@@ -219,6 +223,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         outState.putCharSequence(KEY_REPEAT_NO, mRepeatNoText.getText());
         outState.putCharSequence(KEY_REPEAT_TYPE, mRepeatTypeText.getText());
         outState.putCharSequence(KEY_ACTIVE, mActive);
+        outState.putCharSequence(KEY_GENTLE, mGentle);
     }
 
 
@@ -295,6 +300,16 @@ public class ReminderAddActivity extends AppCompatActivity implements
         mFAB1 = (FloatingActionButton) findViewById(R.id.starred1);
         mFAB1.setVisibility(View.VISIBLE);
         mActive = "false";
+    }
+
+    // 중요 표시 스위치 버튼
+    public void onSwitchGentle(View view) {
+        boolean on = ((Switch) view).isChecked();
+        if(on) {
+            mGentle = "true";
+        } else {
+            mGentle = "false";
+        }
     }
 
     //반복 여부 스위치 버튼
@@ -377,7 +392,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         ReminderDatabase rb = new ReminderDatabase(this);
 
         // Creating Reminder
-        int ID = rb.addReminder(new Reminder(mTitle, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive));
+        int ID = rb.addReminder(new Reminder(mTitle, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive, mGentle));
 
         // Set up calender for creating the notification
         mCalendar.set(Calendar.MONTH, --mMonth);

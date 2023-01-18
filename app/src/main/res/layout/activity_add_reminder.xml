@@ -311,6 +311,63 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/gentle"
+                android:layout_height="72dp">
+
+                <ImageView
+                    android:id="@+id/gentle_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/abc_btn_rating_star_off_mtrl_alpha" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/gentle_ll"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/gentle_icon"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/repeat_text"
+                        android:textColor="@color/abc_primary_text_material_dark"
+                        android:layout_width="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_height="wrap_content"
+                        android:text="중요 표시" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/set_gentle"
+                        android:textSize="15dp"
+                        android:textColor="@color/abc_secondary_text_material_dark"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/gentle_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:onClick="onSwitchGentle"
+                    android:checked="false"
+                    android:textOn="On"
+                    android:textOff="Off"/>
+
+            </RelativeLayout>
+
+
+
         </LinearLayout>
 
     </ScrollView>

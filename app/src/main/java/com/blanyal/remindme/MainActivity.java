@@ -298,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
             itemHolder.setReminderDateTime(item.mDateTime);
             itemHolder.setReminderRepeatInfo(item.mRepeat, item.mRepeatNo, item.mRepeatType);
             itemHolder.setActiveImage(item.mActive);
+            itemHolder.setGentleImage(item.mGentle);
         }
 
         @Override
@@ -313,14 +314,16 @@ public class MainActivity extends AppCompatActivity {
             public String mRepeatNo;
             public String mRepeatType;
             public String mActive;
+            public String mGentle;
 
-            public ReminderItem(String Title, String DateTime, String Repeat, String RepeatNo, String RepeatType, String Active) {
+            public ReminderItem(String Title, String DateTime, String Repeat, String RepeatNo, String RepeatType, String Active, String Gentle) {
                 this.mTitle = Title;
                 this.mDateTime = DateTime;
                 this.mRepeat = Repeat;
                 this.mRepeatNo = RepeatNo;
                 this.mRepeatType = RepeatType;
                 this.mActive = Active;
+                this.mGentle = Gentle;
             }
         }
 
@@ -345,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
         public  class VerticalItemHolder extends SwappingHolder
                 implements View.OnClickListener, View.OnLongClickListener {
             private TextView mTitleText, mDateAndTimeText, mRepeatInfoText;
-            private ImageView mActiveImage , mThumbnailImage;
+            private ImageView mActiveImage , mGentleImage;
             private ColorGenerator mColorGenerator = ColorGenerator.DEFAULT;
             private TextDrawable mDrawableBuilder;
             private SimpleAdapter mAdapter;
@@ -363,8 +366,8 @@ public class MainActivity extends AppCompatActivity {
                 mTitleText = (TextView) itemView.findViewById(R.id.recycle_title);
                 mDateAndTimeText = (TextView) itemView.findViewById(R.id.recycle_date_time);
                 mRepeatInfoText = (TextView) itemView.findViewById(R.id.recycle_repeat_info);
+                mGentleImage = (ImageView) itemView.findViewById(R.id.gentle_icon);
                 mActiveImage = (ImageView) itemView.findViewById(R.id.active_image);
-                mThumbnailImage = (ImageView) itemView.findViewById(R.id.thumbnail_image);
             }
 
             // On clicking a reminder item
@@ -404,7 +407,6 @@ public class MainActivity extends AppCompatActivity {
                 // Create a circular icon consisting of  a random background colour and first letter of title
                 mDrawableBuilder = TextDrawable.builder()
                         .buildRound(letter, color);
-                mThumbnailImage.setImageDrawable(mDrawableBuilder);
             }
 
             // Set date and time views
@@ -429,11 +431,19 @@ public class MainActivity extends AppCompatActivity {
                     mActiveImage.setImageResource(R.drawable.ic_notifications_off_grey600_24dp);
                 }
             }
+
+            public void setGentleImage(String gentle){
+                if(gentle.equals("true")) {
+                    mGentleImage.setImageResource(R.drawable.abc_btn_rating_star_on_mtrl_alpha);
+                }else if (gentle.equals("false")){
+                    mGentleImage.setImageResource(R.drawable.abc_btn_rating_star_off_mtrl_alpha);
+                }
+            }
         }
 
         // Generate random test data
         public  ReminderItem generateDummyData() {
-            return new ReminderItem("1", "2", "3", "4", "5", "6");
+            return new ReminderItem("1", "2", "3", "4", "5", "6", "7");
         }
 
         // Generate real data for each item
@@ -449,6 +459,7 @@ public class MainActivity extends AppCompatActivity {
             List<String> RepeatNos = new ArrayList<>();
             List<String> RepeatTypes = new ArrayList<>();
             List<String> Actives = new ArrayList<>();
+            List<String> Gentles = new ArrayList<>();
             List<String> DateAndTime = new ArrayList<>();
             List<Integer> IDList= new ArrayList<>();
             List<DateTimeSorter> DateTimeSortList = new ArrayList<>();
@@ -461,6 +472,7 @@ public class MainActivity extends AppCompatActivity {
                 RepeatNos.add(r.getRepeatNo());
                 RepeatTypes.add(r.getRepeatType());
                 Actives.add(r.getActive());
+                Gentles.add(r.getGentle());
                 IDList.add(r.getID());
             }
 
@@ -482,11 +494,11 @@ public class MainActivity extends AppCompatActivity {
                 int i = item.getIndex();
 
                 items.add(new SimpleAdapter.ReminderItem(Titles.get(i), DateAndTime.get(i), Repeats.get(i),
-                        RepeatNos.get(i), RepeatTypes.get(i), Actives.get(i)));
+                        RepeatNos.get(i), RepeatTypes.get(i), Actives.get(i), Gentles.get(i)));
                 IDmap.put(k, IDList.get(i));
                 k++;
             }
-          return items;
+            return items;
         }
     }
 }

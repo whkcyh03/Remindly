@@ -54,12 +54,14 @@ public class ReminderEditActivity extends AppCompatActivity implements
     private FloatingActionButton mFAB1;
     private FloatingActionButton mFAB2;
     private Switch mRepeatSwitch;
+    private Switch mGentleSwitch;
     private String mTitle;
     private String mTime;
     private String mDate;
     private String mRepeatNo;
     private String mRepeatType;
     private String mActive;
+    private String mGentle;
     private String mRepeat;
     private String[] mDateSplit;
     private String[] mTimeSplit;
@@ -107,6 +109,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
     private static final String KEY_REPEAT_NO = "repeat_no_key";
     private static final String KEY_REPEAT_TYPE = "repeat_type_key";
     private static final String KEY_ACTIVE = "active_key";
+    private static final String KEY_GENTLE = "gentle_key";
 
     // Constant values in milliseconds
     private static final long milMinute = 60000L;
@@ -132,6 +135,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
         mFAB1 = (FloatingActionButton) findViewById(R.id.starred1);
         mFAB2 = (FloatingActionButton) findViewById(R.id.starred2);
         mRepeatSwitch = (Switch) findViewById(R.id.repeat_switch);
+        mGentleSwitch = (Switch) findViewById(R.id.gentle_switch);
 
         // Setup Toolbar
         setSupportActionBar(mToolbar);
@@ -169,6 +173,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
         mRepeatNo = mReceivedReminder.getRepeatNo();
         mRepeatType = mReceivedReminder.getRepeatType();
         mActive = mReceivedReminder.getActive();
+        mGentle = mReceivedReminder.getGentle();
 
         // Setup TextViews using reminder values
         mTitleText.setText(mTitle);
@@ -205,6 +210,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
             mRepeatType = savedRepeatType;
 
             mActive = savedInstanceState.getString(KEY_ACTIVE);
+            mGentle = savedInstanceState.getString(KEY_GENTLE);
         }
 
         // Setup up active buttons
@@ -225,6 +231,13 @@ public class ReminderEditActivity extends AppCompatActivity implements
         } else if (mRepeat.equals("true")) {
             mRepeatSwitch.setChecked(true);
         }
+
+        // Setup gentle switch
+       if (mGentle.equals("false")) {
+           mGentleSwitch.setChecked(false);
+       } else if (mGentle.equals("true")){
+           mGentleSwitch.setChecked(true);
+       }
 
         // Obtain Date and Time details
         mCalendar = Calendar.getInstance();
@@ -252,6 +265,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
         outState.putCharSequence(KEY_REPEAT_NO, mRepeatNoText.getText());
         outState.putCharSequence(KEY_REPEAT_TYPE, mRepeatTypeText.getText());
         outState.putCharSequence(KEY_ACTIVE, mActive);
+        outState.putCharSequence(KEY_GENTLE, mGentle);
     }
 
     @Override
@@ -327,6 +341,16 @@ public class ReminderEditActivity extends AppCompatActivity implements
         mFAB1 = (FloatingActionButton) findViewById(R.id.starred1);
         mFAB1.setVisibility(View.VISIBLE);
         mActive = "false";
+    }
+
+    //gentle 스위치 설정
+    public void onSwitchGentle(View view) {
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            mGentle = "true";
+        } else {
+            mGentle = "false";
+        }
     }
 
     // On clicking the repeat switch
@@ -411,6 +435,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
         mReceivedReminder.setRepeatNo(mRepeatNo);
         mReceivedReminder.setRepeatType(mRepeatType);
         mReceivedReminder.setActive(mActive);
+        mReceivedReminder.setGentle(mGentle);
 
         // Update reminder
         rb.updateReminder(mReceivedReminder);

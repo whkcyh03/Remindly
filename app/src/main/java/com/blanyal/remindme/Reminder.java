@@ -27,9 +27,10 @@ public class Reminder {
     private String mRepeatNo;
     private String mRepeatType;
     private String mActive;
+    private String mGentle;
 
 
-    public Reminder(int ID, String Title, String Date, String Time, String Repeat, String RepeatNo, String RepeatType, String Active){
+    public Reminder(int ID, String Title, String Date, String Time, String Repeat, String RepeatNo, String RepeatType, String Active, String gentle){
         mID = ID;
         mTitle = Title;
         mDate = Date;
@@ -38,9 +39,10 @@ public class Reminder {
         mRepeatNo = RepeatNo;
         mRepeatType = RepeatType;
         mActive = Active;
+        mGentle = gentle;
     }
 
-    public Reminder(String Title, String Date, String Time, String Repeat, String RepeatNo, String RepeatType, String Active){
+    public Reminder(String Title, String Date, String Time, String Repeat, String RepeatNo, String RepeatType, String Active, String gentle){
         mTitle = Title;
         mDate = Date;
         mTime = Time;
@@ -48,6 +50,7 @@ public class Reminder {
         mRepeatNo = RepeatNo;
         mRepeatType = RepeatType;
         mActive = Active;
+        mGentle = gentle;
     }
 
     public Reminder(){}
@@ -115,4 +118,8 @@ public class Reminder {
     public void setActive(String active) {
         mActive = active;
     }
+
+    public String getGentle() { return mGentle; }
+
+    public void setGentle(String gentle) { mGentle = gentle; }
 }
